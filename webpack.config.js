@@ -8,16 +8,21 @@ module.exports = {
         compress: true,
         progress: true
     },
-    mode: 'development',
+    mode: 'production',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'build.js'
+        filename: 'build.[hash:8].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.html'),
-            filename: 'index.html'
+            filename: 'index.html',
+            minify:{
+                removeAttributeQuotes: true, // 删除双引号
+                collapseWhitespace: true, //折叠成一行
+            },
+            hash: true
         })
     ]
 };

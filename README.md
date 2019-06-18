@@ -40,3 +40,4 @@
     1. 安装`html-webpack-plugin`
     2. 插件的使用
     3. 启动`npm run dev`
+    4. `npm run build`的时候一些`hash`和`html`压缩的使用
