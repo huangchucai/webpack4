@@ -33,3 +33,10 @@
       };
     ```
 
+#### 第四节 配置HTML文件
+* 分支： `three-section`
+* 需求：每次查看结果的时候，我们需要在dist目录创建一个`index.html`,现在想不需要dist目录
+* 内容：
+    1. 安装`html-webpack-plugin`
+    2. 插件的使用
+    3. 启动`npm run dev`
