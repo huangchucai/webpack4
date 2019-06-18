@@ -99,3 +99,7 @@
     })
     ```
     3. 直接`index.html`引入， 但是要配置不打包    
+
+#### 第九节  webpack处理图片
+* 分支： `seven-section`
+* 需求：我们有时候会在css和js中使用图片，需要使用webpack引入图片 1. js创建图片引入`Image` 2. css的`background` 3. HTML中使用`img`
