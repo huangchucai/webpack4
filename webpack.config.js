@@ -1,6 +1,6 @@
 // webpack使用node编写，所以使用COMMON.js模块导出
 const path = require('path');
-const HtmlWebpackPlugin = require("Html-webpack-plugin");
+const HtmlWebpackPlugin = require('Html-webpack-plugin');
 module.exports = {
     devServer: {
         port: 3000,
@@ -8,7 +8,7 @@ module.exports = {
         compress: true,
         progress: true
     },
-    mode: 'production',
+    mode: 'development',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -18,11 +18,37 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.html'),
             filename: 'index.html',
-            minify:{
+            minify: {
                 removeAttributeQuotes: true, // 删除双引号
                 collapseWhitespace: true, //折叠成一行
             },
             hash: true
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            insertAt: 'top'
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                ]
+            },
+            {
+                test: /\.styl$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'stylus-loader'
+                ]
+            }
+        ]
+    }
 };
