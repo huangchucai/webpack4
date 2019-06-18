@@ -1,5 +1,5 @@
-## webpack4
-
+# webpack4
+## 基本配置
 #### 第一节 零配置
 * 分支： `master`
 * 内容：
@@ -14,7 +14,7 @@
     1. 新建`webpack.config.js`文件
     2. webpack4中需要自动添加`mode`表示是开发模式还是生产模式
     3. output中的`path`必须是绝对路径
-    
+## HTML    
 #### 第三节 配置server和插件（方便查看结果）
 * 分支： `second-section`
 * 需求： 我们不想每次查看结果的时候，自己手动打开`index.html`文件，需要有一个服务器帮我们打开
@@ -42,6 +42,7 @@
     3. 启动`npm run dev`
     4. `npm run build`的时候一些`hash`和`html`压缩的使用
 
+## CSS
 #### 第五节  css-loader的使用
 * 分支： `four-section`
 * 需求：我们需要再项目中使用一些css，不需要我们直接link引用，而可以像js那样模块引用
@@ -61,3 +62,17 @@
     3. 安装`postcss-loader` 加在`css-loader`前面添加 和 `autoprefixer`添加浏览器前缀
     4. css压缩  `optimize-css-assets-webpack-plugin` 会破坏原有的js的压缩,需要手动再添加插件`uglifyjs-webpack-plugin`
     
+## JS
+#### 第六节 ES6/ES7 转换成ES5
+* 分支： `five-section`
+* 需求： 我们需要使用一些JS的高级语法，所以需要进行一些转换
+* 内容：
+    1. 使用bable进行转换，安装必要的`loader` 和一些babel需要的核心模块
+    2. loader: `babel-loader` babel需要的模块：  `@babel/core` 语法转换：`@babel/preset-env`  
+    3. 配置loader和选项  
+    ```javascript
+      options: {
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-proposal-class-properties']
+       }
+    ```

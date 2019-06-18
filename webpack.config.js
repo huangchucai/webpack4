@@ -14,7 +14,7 @@ module.exports = {
         compress: true,
         progress: true
     },
-    mode: 'production',
+    mode: 'development',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -64,6 +64,19 @@ module.exports = {
                     'postcss-loader',
                     'stylus-loader' // stylus -> css
                 ]
+            },
+            {
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        "plugins": [
+                            ["@babel/plugin-proposal-decorators", { "legacy": true }],
+                            ["@babel/plugin-proposal-class-properties", { "loose" : true }]
+                        ]
+                    }
+                }
             }
         ]
     }
