@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('Html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssertsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
 
 module.exports = {
@@ -42,6 +43,9 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: '[name]_[hash:8].css'
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery'
         })
     ],
     module: { // loader默认的右 -> 左 下 -> 上

@@ -86,3 +86,16 @@
 * 内容
     1. 安装eslint模块 `npm i eslint -D`
     2. 配置`.eslintrc`的一些配置
+    
+#### 第八节 第三方模块的使用
+* 分支： `six-section`
+* 需求： 我们需要在我们的代码中使用第三方的模块
+* 内容 
+    1. `export-loader` 暴露到window上
+    2. `webpack.ProvidePlugin` 给每一个模块提供
+    ```javascript
+    new webpack.ProvidePlugin({
+      $: 'jquery'
+    })
+    ```
+    3. 直接`index.html`引入， 但是要配置不打包    
