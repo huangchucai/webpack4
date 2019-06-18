@@ -76,3 +76,6 @@
           plugins: ['@babel/plugin-proposal-class-properties']
        }
     ```
+* 优化： 
+    1. 使用`@babel/plugin-transform-runtime`来优化代码（重复使用的抽离），在生产环境需要搭配`@babel/runtime`
+    2. 使用`@babel/polyfill` 来使用一些自带的方法 [文档](https://babeljs.io/docs/en/babel-polyfill)

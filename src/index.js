@@ -1,3 +1,5 @@
+require("@babel/polyfill");
+
 require('./index.css');
 require('./test.styl');
 const a = require('./a.js');
@@ -16,3 +18,4 @@ function log(target) {
 }
 const obj = new Obj();
 console.log(obj.a);
+console.log([1, 2, 3].includes(2));
