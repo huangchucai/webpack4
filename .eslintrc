@@ -1,13 +1,7 @@
 {
   "extends": "eslint-config-alloy",
   "globals": {
-    "wx": true,
-    "App": true,
-    "getApp": true,
-    "Page": true,
-    "Component": true,
-    "getCurrentPages": true,
-    "Behavior": true
+    "$": "true"
   },
   "parserOptions": {
     "sourceType": "module",
