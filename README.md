@@ -46,4 +46,18 @@
 * 分支： `four-section`
 * 需求：我们需要再项目中使用一些css，不需要我们直接link引用，而可以像js那样模块引用
 * 内容： 
-    1. 
+    1. 由于css本身没有一些模块的支持，所以我们需要在webpack中定义来转换css的文件
+    2. 安装一些loader `css-loader style-loader stylus stylus-loader`
+    3. 编写`webpack.config.js`中的一些配置`module`
+    
+#### 第六节 抽离css的模块和前缀的添加
+* 分支： `four-section`
+* 需求：
+    * 有时候我们不需要写成行内样式，而需要把css单独抽成一个文件，然后引入到`index.html`中
+    * 一些css3 新的语法可以进行一些转换
+* 内容： 
+    1. 安装插件`mini-css-extract-plugin`
+    2. 然后在`module`的`rules`中使用`MiniCssExtractPlugin.loader`，去掉`style-loader`
+    3. 安装`postcss-loader` 加在`css-loader`前面添加 和 `autoprefixer`添加浏览器前缀
+    4. css压缩  `optimize-css-assets-webpack-plugin` 会破坏原有的js的压缩,需要手动再添加插件`uglifyjs-webpack-plugin`
+    
