@@ -1,6 +1,12 @@
 // webpack使用node编写，所以使用COMMON.js模块导出
 const path = require('path');
+
 const HtmlWebpackPlugin = require('Html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssertsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+
 module.exports = {
     devServer: {
         port: 3000,
@@ -8,11 +14,21 @@ module.exports = {
         compress: true,
         progress: true
     },
-    mode: 'development',
+    mode: 'production',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'build.[hash:8].js'
+    },
+    optimization: {
+        minimizer: [
+            new OptimizeCSSAssertsPlugin(),
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true, // 并行请求
+                sourceMap:true,
+            })
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -23,6 +39,9 @@ module.exports = {
                 collapseWhitespace: true, //折叠成一行
             },
             hash: true
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name]_[hash:8].css'
         })
     ],
     module: {
@@ -30,23 +49,20 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            insertAt: 'top'
-                        }
-                    },
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                     },
+                    'postcss-loader',
                 ]
             },
             {
                 test: /\.styl$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'stylus-loader'
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',   // 解析@import 语法
+                    'postcss-loader',
+                    'stylus-loader' // stylus -> css
                 ]
             }
         ]
