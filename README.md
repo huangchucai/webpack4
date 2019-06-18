@@ -79,3 +79,10 @@
 * 优化： 
     1. 使用`@babel/plugin-transform-runtime`来优化代码（重复使用的抽离），在生产环境需要搭配`@babel/runtime`
     2. 使用`@babel/polyfill` 来使用一些自带的方法 [文档](https://babeljs.io/docs/en/babel-polyfill)
+    
+#### 第七节 eslint配置
+* 分支： `five-section`
+* 需求：需要进行一些js的写法规范
+* 内容
+    1. 安装eslint模块 `npm i eslint -D`
+    2. 配置`.eslintrc`的一些配置

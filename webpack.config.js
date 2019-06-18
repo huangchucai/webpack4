@@ -44,8 +44,32 @@ module.exports = {
             filename: '[name]_[hash:8].css'
         })
     ],
-    module: {
+    module: { // loader默认的右 -> 左 下 -> 上
         rules: [
+            {
+                test: /\.js$/,
+                use: {
+                    loader: 'eslint-loader',
+                },
+                enforce: "pre",// 优先执行
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        "plugins": [
+                            ["@babel/plugin-proposal-decorators", { "legacy": true }],
+                            ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+                            "@babel/plugin-transform-runtime"
+                        ]
+                    }
+                },
+                include: path.resolve(__dirname, 'src'),
+                exclude: "/node_modules"
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -65,22 +89,6 @@ module.exports = {
                     'stylus-loader' // stylus -> css
                 ]
             },
-            {
-                test: /\.js$/,
-                use: {
-                    loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
-                    options: {
-                        presets: ['@babel/preset-env'],
-                        "plugins": [
-                            ["@babel/plugin-proposal-decorators", { "legacy": true }],
-                            ["@babel/plugin-proposal-class-properties", { "loose" : true }],
-                            "@babel/plugin-transform-runtime"
-                        ]
-                    }
-                },
-                include: path.resolve(__dirname, 'src'),
-                exclude: "/node_modules"
-            }
         ]
     }
 };
