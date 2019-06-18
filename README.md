@@ -41,3 +41,11 @@
     2. 插件的使用
     3. 启动`npm run dev`
     4. `npm run build`的时候一些`hash`和`html`压缩的使用
+
+#### 第五节  css-loader的使用
+* 分支： `four-section`
+* 需求：我们需要再项目中使用一些css，不需要我们直接link引用，而可以像js那样模块引用
+* 内容： 
+    1. 由于css本身没有一些模块的支持，所以我们需要在webpack中定义来转换css的文件
+    2. 安装一些loader `css-loader style-loader stylus stylus-loader`
+    3. 编写`webpack.config.js`中的一些配置`module`
