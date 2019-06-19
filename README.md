@@ -152,3 +152,34 @@
    1. `clean-webpack-plugin`清空指定目录
    2. `copy-webpack-plugin` 复制指定目录
    3. webpack内置`BannerPlugin`： 添加版权说明
+
+## 服务器交互
+#### 第十三节 跨域问题和Mock数据、启动服务器
+* 分支：`nine-section`
+* 需求：有时候我们需要解决一些跨域问题和一些测试数据的mock,以及自己写一个服务器
+* 内容：
+    1. 解决跨域问题，使用`express`进行转换 例如：服务端开启的是一个3000的端口（`server.js`）, 而我
+    们的`webpack-dev-server`开启的是一个8080端口
+    ```javascript
+      先发的到8080端口 （`webpack-dev-server`）=> 转发给3000
+      devServer: {
+        proxy: {
+          '/api': 'http://localhost:3000'  // 以api开头的请求转发到3000端口上
+        }  
+      }
+    
+      // /api/user  => 转到3000的端口的 /user
+      devServer: {
+        proxy: {
+          '/api':  {
+              target: 'http://localhost:3000',
+              pathRewite: {
+                  "/api": ""  
+              }
+          }
+        }  
+      }  
+    ```
+    
+    2. 前端单纯的Mock数据
+    

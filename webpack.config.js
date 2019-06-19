@@ -13,10 +13,18 @@ const webpack = require('webpack');
 
 module.exports = {
     devServer: {
-        port: 3000,
+        // port: 3000,
         contentBase: path.resolve(__dirname, 'dist'),
         compress: true,
-        progress: true
+        progress: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3000',
+                pathRewrite: {
+                    '/api': ''
+                }
+            }
+        }
     },
     mode: 'production',
     devtool: 'source-map',
@@ -62,7 +70,7 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
-            {from: '/src/logo.svg', to: './'}
+            // {from: '/src/logo.svg', to: './'}
         ]),
         new webpack.BannerPlugin('make hcc 2019')
     ],
