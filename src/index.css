@@ -2,3 +2,6 @@
 body {
     background: red;
 }
+.test {
+    background: url("./logo.svg");
+}

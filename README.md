@@ -103,3 +103,10 @@
 #### 第九节  webpack处理图片
 * 分支： `seven-section`
 * 需求：我们有时候会在css和js中使用图片，需要使用webpack引入图片 1. js创建图片引入`Image` 2. css的`background` 3. HTML中使用`img`
+* 内容：
+    1. 需要使用`url-loader` 当图片小于一定值的时候转换为base64,其他情况使用`file-loader`为图片
+    2. 在webpack中配置图片的处理
+    3. 如果需要再`index.html`中使用图片，可以使用require语句或者使用`html-loader`
+    ```javascript
+    <img src="${require('./group.png')}" alt="">
+    ```

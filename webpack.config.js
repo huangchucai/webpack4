@@ -27,7 +27,7 @@ module.exports = {
             new UglifyJsPlugin({
                 cache: true,
                 parallel: true, // 并行请求
-                sourceMap:true,
+                sourceMap: true,
             })
         ]
     },
@@ -51,11 +51,20 @@ module.exports = {
     module: { // loader默认的右 -> 左 下 -> 上
         rules: [
             {
+                test: /\.png|gif|jpg|jepg|svg$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 50 * 1024   // s=50k一下使用base64
+                    }
+                }
+            },
+            {
                 test: /\.js$/,
                 use: {
                     loader: 'eslint-loader',
                 },
-                enforce: "pre",// 优先执行
+                enforce: 'pre',// 优先执行
                 exclude: /node_modules/,
             },
             {
@@ -64,15 +73,15 @@ module.exports = {
                     loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
                     options: {
                         presets: ['@babel/preset-env'],
-                        "plugins": [
-                            ["@babel/plugin-proposal-decorators", { "legacy": true }],
-                            ["@babel/plugin-proposal-class-properties", { "loose" : true }],
-                            "@babel/plugin-transform-runtime"
+                        'plugins': [
+                            ['@babel/plugin-proposal-decorators', {'legacy': true}],
+                            ['@babel/plugin-proposal-class-properties', {'loose': true}],
+                            '@babel/plugin-transform-runtime'
                         ]
                     }
                 },
                 include: path.resolve(__dirname, 'src'),
-                exclude: "/node_modules"
+                exclude: '/node_modules'
             },
             {
                 test: /\.css$/,
