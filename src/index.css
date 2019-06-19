@@ -1,7 +1,4 @@
 @import './a.css';
 body {
-    background: red;
-}
-.test {
-    background: url("./logo.svg");
+    background: #abcdef;
 }
