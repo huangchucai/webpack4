@@ -201,3 +201,13 @@
 
       app.use(middleware(compile));
     ```
+
+## 拓展
+#### resolve (解析)
+* 分支： ten-section
+* 需求： 
+    1. 寻找第三方模块的时候，只限于本目录下面的`node_modules`,而不向上查找。（`modules`）
+    2. 一些别名来减少字段（`alias`）
+    3. import第三方模块的时候默认会读取`package.json`下面的main字段，希望优先读取别的字段（`mainFields`）
+    4. 默认添加一些后缀查找（`extensions`）
+
