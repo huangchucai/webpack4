@@ -124,4 +124,13 @@
 * 内容：
    1. 全局配置cdn路径是output下面配置`publicPath`
    2. 可以在单独的模块中配置`publicPath`单独的为不同的类型配置 
+   
+#### 第十节 多页面的配置
+* 分支 `eight-section`
+* 需求： 需要多个页面的来展示不同的效果
+* 内容： 
+    1. 需要配置多个`entry`，所以entry为一个对象
+    2. 多个入口文件`index.html`, 产生不同名字的文件
+    3. 由于`HtmlWebpackPlugin`这个插件会把文件产生的资源都插到对应的`template`中，所以我们需要指定对应的文件插入对应的打包资源
+    4. 配置`HtmlWebpackPlugin`的`chunks`, 只打包对应的资源到对应的模板   
      
