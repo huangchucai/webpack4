@@ -181,5 +181,13 @@
       }  
     ```
     
-    2. 前端单纯的Mock数据
-    
+    2. 前端单纯的Mock数据 (启动devServer默认提供的钩子)
+    ```javascript
+      devServer: {
+           before(app) {
+              app.get('/api/user', (req,res) => {
+                  res.json({name: 'hcc-mock-before'})
+              })
+            }
+      }
+    ```

@@ -17,14 +17,21 @@ module.exports = {
         contentBase: path.resolve(__dirname, 'dist'),
         compress: true,
         progress: true,
-        proxy: {
-            '/api': {
-                target: 'http://localhost:3000',
-                pathRewrite: {
-                    '/api': ''
-                }
-            }
+        // 2）前端mock数据
+        before(app) {
+            app.get('/api/user', (req,res) => {
+                res.json({name: 'hcc-mock-before'})
+            })
         }
+        // proxy: {
+            // 1）解决跨域问题
+            // '/api': {
+            //     target: 'http://localhost:3000',
+            //     pathRewrite: {
+            //         '/api': ''
+            //     }
+            // }
+        // }
     },
     mode: 'production',
     devtool: 'source-map',
