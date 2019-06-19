@@ -19,7 +19,8 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'build.[hash:8].js'
+        filename: 'js/build.[hash:8].js',
+        // publicPath: 'http://localhost:3000'
     },
     optimization: {
         minimizer: [
@@ -27,7 +28,7 @@ module.exports = {
             new UglifyJsPlugin({
                 cache: true,
                 parallel: true, // 并行请求
-                sourceMap:true,
+                sourceMap: true,
             })
         ]
     },
@@ -42,7 +43,7 @@ module.exports = {
             hash: true
         }),
         new MiniCssExtractPlugin({
-            filename: '[name]_[hash:8].css'
+            filename: 'css/[name]_[hash:8].css'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery'
@@ -51,11 +52,21 @@ module.exports = {
     module: { // loader默认的右 -> 左 下 -> 上
         rules: [
             {
+                test: /\.png|gif|jpg|jepg|svg$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 50 * 1024,   // s=50k一下使用base64
+                        outputPath: '/images/',
+                    }
+                }
+            },
+            {
                 test: /\.js$/,
                 use: {
                     loader: 'eslint-loader',
                 },
-                enforce: "pre",// 优先执行
+                enforce: 'pre',// 优先执行
                 exclude: /node_modules/,
             },
             {
@@ -64,15 +75,15 @@ module.exports = {
                     loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
                     options: {
                         presets: ['@babel/preset-env'],
-                        "plugins": [
-                            ["@babel/plugin-proposal-decorators", { "legacy": true }],
-                            ["@babel/plugin-proposal-class-properties", { "loose" : true }],
-                            "@babel/plugin-transform-runtime"
+                        'plugins': [
+                            ['@babel/plugin-proposal-decorators', {'legacy': true}],
+                            ['@babel/plugin-proposal-class-properties', {'loose': true}],
+                            '@babel/plugin-transform-runtime'
                         ]
                     }
                 },
                 include: path.resolve(__dirname, 'src'),
-                exclude: "/node_modules"
+                exclude: '/node_modules'
             },
             {
                 test: /\.css$/,
