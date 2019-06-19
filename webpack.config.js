@@ -16,10 +16,13 @@ module.exports = {
         progress: true
     },
     mode: 'development',
-    entry: './src/index.js',
+    entry: {
+        index: './src/index.js',
+        other: './src/other.js'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'js/build.[hash:8].js',
+        filename: 'js/[name].[hash:8].js',
         // publicPath: 'http://localhost:3000'
     },
     optimization: {
@@ -40,6 +43,17 @@ module.exports = {
                 removeAttributeQuotes: true, // 删除双引号
                 collapseWhitespace: true, //折叠成一行
             },
+            chunks: ['index'],
+            hash: true
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'src/other.html'),
+            filename: 'other.html',
+            minify: {
+                removeAttributeQuotes: true, // 删除双引号
+                collapseWhitespace: true, //折叠成一行
+            },
+            chunks: ['other'],
             hash: true
         }),
         new MiniCssExtractPlugin({
