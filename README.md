@@ -160,6 +160,7 @@
 * 内容：
     1. 解决跨域问题，使用`express`进行转换 例如：服务端开启的是一个3000的端口（`server.js`）, 而我
     们的`webpack-dev-server`开启的是一个8080端口
+    
     ```javascript
       先发的到8080端口 （`webpack-dev-server`）=> 转发给3000
       devServer: {
@@ -190,4 +191,13 @@
               })
             }
       }
+    ```
+    3. 不使用代理，在启动服务端的时候启动webpack(2个公用同一个端口，不存在跨域)
+    ```javascript
+      const webpack = require('webpack');
+      const middleware = require('webpack-dev-middleware');
+      const config = require('./webpack.config.js');
+      const compile = webpack(config);
+
+      app.use(middleware(compile));
     ```
