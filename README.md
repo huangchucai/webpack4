@@ -124,4 +124,31 @@
 * 内容：
    1. 全局配置cdn路径是output下面配置`publicPath`
    2. 可以在单独的模块中配置`publicPath`单独的为不同的类型配置 
+   
+#### 第十节 多页面的配置
+* 分支 `eight-section`
+* 需求： 需要多个页面的来展示不同的效果
+* 内容： 
+    1. 需要配置多个`entry`，所以entry为一个对象
+    2. 多个入口文件`index.html`, 产生不同名字的文件
+    3. 由于`HtmlWebpackPlugin`这个插件会把文件产生的资源都插到对应的`template`中，所以我们需要指定对应的文件插入对应的打包资源
+    4. 配置`HtmlWebpackPlugin`的`chunks`, 只打包对应的资源到对应的模板   
      
+#### 第十一节 source-map的使用
+* 分支： `seven-section`
+* 需求：方便我们调试开发代码，需要源码映射
+* 内容：
+   1. 在`webpack.config.js`中使用`devtool`
+
+#### 第十二节  实时监控watch
+* 分支： `seven-section`
+* 需求：方便我们实时的打包文件
+* 内容：
+   1. 在`webpack.config.js`中使用`watch`
+#### 第十二节  实时监控watch
+* 分支： `seven-section`
+* 需求：一些常用的插件
+* 内容：
+   1. `clean-webpack-plugin`清空指定目录
+   2. `copy-webpack-plugin` 复制指定目录
+   3. webpack内置`BannerPlugin`： 添加版权说明
