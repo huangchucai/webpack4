@@ -110,3 +110,18 @@
     ```javascript
     <img src="${require('./group.png')}" alt="">
     ```
+#### 第九节  文件的归类
+* 分支： `seven-section`
+* 需求：需要把打包出来的文件对应的相应的目录
+* 内容：
+     1. css对应最后的处理plugin `MiniCssExtractPlugin`(一般都是filename的那个处理)
+     2. js对应`output`的路径配置
+     3. 图片对应`url-loader`本质上是调用了`file-loader`的options中的`outputPath`
+  
+#### 第九节  cdn的单个使用或者整体使用
+* 分支： `seven-section`
+* 需求：需要把打包出来的文件添加对应的cdn域名
+* 内容：
+   1. 全局配置cdn路径是output下面配置`publicPath`
+   2. 可以在单独的模块中配置`publicPath`单独的为不同的类型配置 
+     

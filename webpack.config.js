@@ -19,7 +19,8 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'build.[hash:8].js'
+        filename: 'js/build.[hash:8].js',
+        // publicPath: 'http://localhost:3000'
     },
     optimization: {
         minimizer: [
@@ -42,7 +43,7 @@ module.exports = {
             hash: true
         }),
         new MiniCssExtractPlugin({
-            filename: '[name]_[hash:8].css'
+            filename: 'css/[name]_[hash:8].css'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery'
@@ -55,7 +56,8 @@ module.exports = {
                 use: {
                     loader: 'url-loader',
                     options: {
-                        limit: 50 * 1024   // s=50k一下使用base64
+                        limit: 50 * 1024,   // s=50k一下使用base64
+                        outputPath: '/images/',
                     }
                 }
             },
