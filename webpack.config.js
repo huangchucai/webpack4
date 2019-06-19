@@ -5,6 +5,9 @@ const HtmlWebpackPlugin = require('Html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssertsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const webpack = require('webpack');
 
 
@@ -15,10 +18,15 @@ module.exports = {
         compress: true,
         progress: true
     },
-    mode: 'development',
+    mode: 'production',
+    devtool: 'source-map',
+    // watch: true,
+    // watchOptions: {
+    //     ignored: /node_modules/,
+    //     aggregateTimeout: 1000 // 防抖
+    // },
     entry: {
         index: './src/index.js',
-        other: './src/other.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -46,24 +54,19 @@ module.exports = {
             chunks: ['index'],
             hash: true
         }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src/other.html'),
-            filename: 'other.html',
-            minify: {
-                removeAttributeQuotes: true, // 删除双引号
-                collapseWhitespace: true, //折叠成一行
-            },
-            chunks: ['other'],
-            hash: true
-        }),
         new MiniCssExtractPlugin({
             filename: 'css/[name]_[hash:8].css'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery'
-        })
+        }),
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([
+            {from: '/src/logo.svg', to: './'}
+        ]),
+        new webpack.BannerPlugin('make hcc 2019')
     ],
-    module: { // loader默认的右 -> 左 下 -> 上
+    module: { // loader默认的右 -> 左 下 -> 上n
         rules: [
             {
                 test: /\.png|gif|jpg|jepg|svg$/,
