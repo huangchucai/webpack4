@@ -17,29 +17,9 @@ module.exports = {
         contentBase: path.resolve(__dirname, 'dist'),
         compress: true,
         progress: true,
-        // // 2）前端mock数据
-        // before(app) {
-        //     app.get('/api/user', (req, res) => {
-        //         res.json({name: 'hcc-mock-before'});
-        //     });
-        // }
-        // proxy: {
-        // 1）解决跨域问题
-        // '/api': {
-        //     target: 'http://localhost:3000',
-        //     pathRewrite: {
-        //         '/api': ''
-        //     }
-        // }
-        // }
     },
     mode: 'production',
     devtool: 'source-map',
-    // watch: true,
-    // watchOptions: {
-    //     ignored: /node_modules/,
-    //     aggregateTimeout: 1000 // 防抖
-    // },
     entry: {
         index: './src/index.js',
     },
@@ -67,6 +47,9 @@ module.exports = {
         }
     },
     plugins: [
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true),
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.html'),
             filename: 'index.html',

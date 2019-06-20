@@ -204,10 +204,18 @@
 
 ## 拓展
 #### resolve (解析)
-* 分支： ten-section
+* 分支： `ten-section`
 * 需求： 
     1. 寻找第三方模块的时候，只限于本目录下面的`node_modules`,而不向上查找。（`modules`）
     2. 一些别名来减少字段（`alias`）
     3. import第三方模块的时候默认会读取`package.json`下面的main字段，希望优先读取别的字段（`mainFields`）
     4. 默认添加一些后缀查找（`extensions`）
 
+#### 环境变量和开发、生成配置分开
+* 分支：`ten-section`
+* 需求： 
+    1. 有时候我们需要在开发文件中使用一些环境变量来区分一些内容
+    2. 在开发环境和生成环境需要不同的webpack内容，例如：开发环境的`source-map`和生产环境的一些压缩等
+* 内容：
+    1. 使用webpack内置的`webpack.DefinePlugin` 在编译的时候提供配置的全局变量
+    2. 使用`webpack-merge`来区分不同环境的不同配置文件
