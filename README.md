@@ -219,3 +219,24 @@
 * 内容：
     1. 使用webpack内置的`webpack.DefinePlugin` 在编译的时候提供配置的全局变量
     2. 使用`webpack-merge`来区分不同环境的不同配置文件
+    
+#### 一些优化的配置项(提示性能)
+* 分支：`ten-section`
+* 需求： 
+    1. webpack会分析引入的第三方模块的一些依赖，然后处理，需要不去分析某个第三方模块
+    2. 想要不导入一些特定模块的一些内容，例如，moment模块的语言包，我们不需要，直接使用特定的语言包
+    3. 抽离第三方模块，提高构建的速度
+* 内容：
+    1. 不分析第三方模块`noParse`
+    ```javascript
+      module.exports = {
+        //...
+        module: {
+          noParse: /jquery|lodash/,
+        }
+      };
+    ```
+    2. 使用webpack.IgnorePlugin插件忽略特性的第三方模块的一些内容 
+    3. 使用 `webpack.DllPlugin` 和 `webpack.DllReferencePlugin`来分离第三方模块的构建
+    4. 使用`happypack`分多线程打包
+    

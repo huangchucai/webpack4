@@ -46,11 +46,14 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery'
         }),
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
             // {from: '/src/logo.svg', to: './'}
         ]),
-        new webpack.BannerPlugin('make hcc 2019')
+        new webpack.BannerPlugin('make hcc 2019'),
+        new webpack.DllReferencePlugin({
+            manifest: path.resolve(__dirname, 'dist', 'mainfest.json')
+        })
     ],
     module: { // loader默认的右 -> 左 下 -> 上n
         rules: [
@@ -77,7 +80,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
                     options: {
-                        presets: ['@babel/preset-env'],
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
                         'plugins': [
                             ['@babel/plugin-proposal-decorators', {'legacy': true}],
                             ['@babel/plugin-proposal-class-properties', {'loose': true}],

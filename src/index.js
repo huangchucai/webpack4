@@ -1,4 +1,5 @@
-// require('@babel/polyfill');
-require('./index.css');
-console.log(process.env.NODE_ENV);
-console.log(PRODUCTION);
+import React from 'react'; //eslint-disable-line
+
+import { render } from 'react-dom';
+
+render(<h1>jsx</h1>, window.root);
