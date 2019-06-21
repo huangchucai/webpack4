@@ -204,10 +204,39 @@
 
 ## 拓展
 #### resolve (解析)
-* 分支： ten-section
+* 分支： `ten-section`
 * 需求： 
     1. 寻找第三方模块的时候，只限于本目录下面的`node_modules`,而不向上查找。（`modules`）
     2. 一些别名来减少字段（`alias`）
     3. import第三方模块的时候默认会读取`package.json`下面的main字段，希望优先读取别的字段（`mainFields`）
     4. 默认添加一些后缀查找（`extensions`）
 
+#### 环境变量和开发、生成配置分开
+* 分支：`ten-section`
+* 需求： 
+    1. 有时候我们需要在开发文件中使用一些环境变量来区分一些内容
+    2. 在开发环境和生成环境需要不同的webpack内容，例如：开发环境的`source-map`和生产环境的一些压缩等
+* 内容：
+    1. 使用webpack内置的`webpack.DefinePlugin` 在编译的时候提供配置的全局变量
+    2. 使用`webpack-merge`来区分不同环境的不同配置文件
+    
+#### 一些优化的配置项(提示性能)
+* 分支：`ten-section`
+* 需求： 
+    1. webpack会分析引入的第三方模块的一些依赖，然后处理，需要不去分析某个第三方模块
+    2. 想要不导入一些特定模块的一些内容，例如，moment模块的语言包，我们不需要，直接使用特定的语言包
+    3. 抽离第三方模块，提高构建的速度
+* 内容：
+    1. 不分析第三方模块`noParse`
+    ```javascript
+      module.exports = {
+        //...
+        module: {
+          noParse: /jquery|lodash/,
+        }
+      };
+    ```
+    2. 使用webpack.IgnorePlugin插件忽略特性的第三方模块的一些内容 
+    3. 使用 `webpack.DllPlugin` 和 `webpack.DllReferencePlugin`来分离第三方模块的构建
+    4. 使用`happypack`分多线程打包
+    

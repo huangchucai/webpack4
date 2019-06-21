@@ -3,8 +3,6 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('Html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssertsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -12,34 +10,6 @@ const webpack = require('webpack');
 
 
 module.exports = {
-    devServer: {
-        // port: 3000,
-        contentBase: path.resolve(__dirname, 'dist'),
-        compress: true,
-        progress: true,
-        // // 2）前端mock数据
-        // before(app) {
-        //     app.get('/api/user', (req, res) => {
-        //         res.json({name: 'hcc-mock-before'});
-        //     });
-        // }
-        // proxy: {
-        // 1）解决跨域问题
-        // '/api': {
-        //     target: 'http://localhost:3000',
-        //     pathRewrite: {
-        //         '/api': ''
-        //     }
-        // }
-        // }
-    },
-    mode: 'production',
-    devtool: 'source-map',
-    // watch: true,
-    // watchOptions: {
-    //     ignored: /node_modules/,
-    //     aggregateTimeout: 1000 // 防抖
-    // },
     entry: {
         index: './src/index.js',
     },
@@ -47,16 +17,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].[hash:8].js',
         // publicPath: 'http://localhost:3000'
-    },
-    optimization: {
-        minimizer: [
-            new OptimizeCSSAssertsPlugin(),
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true, // 并行请求
-                sourceMap: true,
-            })
-        ]
     },
     resolve: {
         modules: ["node_modules"],
@@ -67,6 +27,9 @@ module.exports = {
         }
     },
     plugins: [
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true),
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.html'),
             filename: 'index.html',
@@ -83,11 +46,14 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery'
         }),
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
             // {from: '/src/logo.svg', to: './'}
         ]),
-        new webpack.BannerPlugin('make hcc 2019')
+        new webpack.BannerPlugin('make hcc 2019'),
+        new webpack.DllReferencePlugin({
+            manifest: path.resolve(__dirname, 'dist', 'mainfest.json')
+        })
     ],
     module: { // loader默认的右 -> 左 下 -> 上n
         rules: [
@@ -114,7 +80,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader', // @babel/preset-env 大的插件使用 ES6 -> ES5
                     options: {
-                        presets: ['@babel/preset-env'],
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
                         'plugins': [
                             ['@babel/plugin-proposal-decorators', {'legacy': true}],
                             ['@babel/plugin-proposal-class-properties', {'loose': true}],
