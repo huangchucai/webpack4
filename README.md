@@ -225,7 +225,10 @@
 * 需求： 
     1. webpack会分析引入的第三方模块的一些依赖，然后处理，需要不去分析某个第三方模块
     2. 想要不导入一些特定模块的一些内容，例如，moment模块的语言包，我们不需要，直接使用特定的语言包
-    3. 抽离第三方模块，提高构建的速度
+    3. 抽离第三方模块，提高**构建的速度**
+    4. 使用import引入，webpack自带的`tree-shaking`,可以把没有用的代码自动删掉，但是如果使用的require引入的话，es6模块会把结果放在`defalut`属性下面
+    5. 抽离第三方模块和公共的模块`SplitChunksPlugin`
+    6. **懒加载**： 使用`import`语句动态模块化导入，按需加载（内部靠jsonp实现，vue懒加载，react懒加载）
 * 内容：
     1. 不分析第三方模块`noParse`
     ```javascript
@@ -239,4 +242,14 @@
     2. 使用webpack.IgnorePlugin插件忽略特性的第三方模块的一些内容 
     3. 使用 `webpack.DllPlugin` 和 `webpack.DllReferencePlugin`来分离第三方模块的构建
     4. 使用`happypack`分多线程打包
+    
+#### 热更新（不适用于生产环境，只适用于开发环境）
+* 分支 `eleven-section`
+* 需求：当模块更新的时候，只需要更新部分代码，而不是整个模块的更新
+* 内容：
+    1. 更新`webpack-dev-server`配置  添加 `hot`
+    2. 使用webpack内置的`HotModuleReplacementPlugin`插件
+    3. 可以使用`webpack.NamedModulesPlugin`来打印通知我们哪一个模块被更新了
+    4. 注意必须提前引入对应的模块，然后再监听模块的变化    
+    
     

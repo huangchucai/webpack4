@@ -1,5 +1,12 @@
-import React from 'react'; //eslint-disable-line
+import { aa } from './test';
 
-import { render } from 'react-dom';
-
-render(<h1>jsx</h1>, window.root);
+console.log(aa());
+if (module.hot) {
+    module.hot.accept('./test', function () {
+        const result = require('./test');
+        console.log(result);
+        console.log(result.aa);
+        console.log(result.name);
+        console.log('文件更新了------');
+    });
+}
