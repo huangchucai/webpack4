@@ -50,6 +50,8 @@
     1. 由于css本身没有一些模块的支持，所以我们需要在webpack中定义来转换css的文件
     2. 安装一些loader `css-loader style-loader stylus stylus-loader`
     3. 编写`webpack.config.js`中的一些配置`module`
+    4. **loader是有顺序的，会从右向左执行，从下到上执行**
+    5. `style-loader` 可以通过options选项来判断插入到html里面的位置
     
 #### 第六节 抽离css的模块和前缀的添加
 * 分支： `four-section`
@@ -57,18 +59,18 @@
     * 有时候我们不需要写成行内样式，而需要把css单独抽成一个文件，然后引入到`index.html`中
     * 一些css3 新的语法可以进行一些转换
 * 内容： 
-    1. 安装插件`mini-css-extract-plugin`
+    1. 安装插件`mini-css-extract-plugin`，插件的使用是没有顺序的
     2. 然后在`module`的`rules`中使用`MiniCssExtractPlugin.loader`，去掉`style-loader`
-    3. 安装`postcss-loader` 加在`css-loader`前面添加 和 `autoprefixer`添加浏览器前缀
-    4. css压缩  `optimize-css-assets-webpack-plugin` 会破坏原有的js的压缩,需要手动再添加插件`uglifyjs-webpack-plugin`
+    3. 安装`postcss-loader` 加在`css-loader`前面添加 和 使用`autoprefixer`插件去添加浏览器前缀
+    4. css压缩  `optimize-css-assets-webpack-plugin` 会破坏原有的js的压缩,需要手动再添加插件`uglifyjs-webpack-plugin`来压缩js文件
     
 ## JS
-#### 第六节 ES6/ES7 转换成ES5
+#### 第六节、第七节、第八节 ES6/ES7 转换成ES5
 * 分支： `five-section`
-* 需求： 我们需要使用一些JS的高级语法，所以需要进行一些转换
+* 需求： 我们需要使用一些JS的高级语法，所以需要通过loader进行一些转换
 * 内容：
     1. 使用bable进行转换，安装必要的`loader` 和一些babel需要的核心模块
-    2. loader: `babel-loader` babel需要的模块：  `@babel/core` 语法转换：`@babel/preset-env`  
+    2. loader: `babel-loader` babel需要的模块：  `@babel/core`  语法转换：`@babel/preset-env` （一个大的插件包）
     3. 配置loader和选项  
     ```javascript
       options: {
@@ -76,20 +78,24 @@
           plugins: ['@babel/plugin-proposal-class-properties']
        }
     ```
+    4. `presets`配置是一个许多插件的集合，单个的插件需要使用`plugins`配置选项
+    
 * 优化： 
     1. 使用`@babel/plugin-transform-runtime`来优化代码（重复使用的抽离），在生产环境需要搭配`@babel/runtime`
     2. 使用`@babel/polyfill` 来使用一些自带的方法 [文档](https://babeljs.io/docs/en/babel-polyfill)
     
-#### 第七节 eslint配置
+#### 第⑧节 eslint配置
 * 分支： `five-section`
 * 需求：需要进行一些js的写法规范
 * 内容
     1. 安装eslint模块 `npm i eslint -D`
-    2. 配置`.eslintrc`的一些配置
+    2. eslint 需要配合`eslint-loader`来使用，校验js的语法规范，在js的loader的处理最前方
+    3. 可以通过配置`enforce: "pre"`优先执行`eslint-loader`的校验规则
+    4. 配置`.eslintrc`的一些配置
     
-#### 第八节 第三方模块的使用
+#### 第九节 第三方模块的使用
 * 分支： `six-section`
-* 需求： 我们需要在我们的代码中使用第三方的模块
+* 需求：打包后，我们的每一个文件都封装在一个闭包里面，我们通过`import $ from ‘jquery’ `的时候，虽然可以使用jquery, 但是只是在闭包的作用域有效，并不是挂载在window下，所以不能通过`window.$`来使用，我们如果想挂载到全局下，就需要添加一些loader进行处理
 * 内容 
     1. `export-loader` 暴露到window上
     2. `webpack.ProvidePlugin` 给每一个模块提供
