@@ -96,15 +96,41 @@
 #### 第九节 第三方模块的使用
 * 分支： `six-section`
 * 需求：打包后，我们的每一个文件都封装在一个闭包里面，我们通过`import $ from ‘jquery’ `的时候，虽然可以使用jquery, 但是只是在闭包的作用域有效，并不是挂载在window下，所以不能通过`window.$`来使用，我们如果想挂载到全局下，就需要添加一些loader进行处理
-* 内容 
-    1. `export-loader` 暴露到window上
-    2. `webpack.ProvidePlugin` 给每一个模块提供
+
+* loader 可以分为几种，
+   1. 全局暴露loader，提供全局变量  
+   2. 内联loader来进行文件的再次处理 
+   3. pre 前置loader 最先执行的，比如`eslint-loader`, 
+   4. 普通normal loader   
+   5. 后置loader `postloader`
+   
+* 内容 （可以通过下面三种方式）
+    1. 使用`export-loader` 暴露到window上（全局loader)
+        ```javascript
+        // 文件中直接使用
+        import $ from 'expose-loader?$!jquery'
+        
+        // 也可以在webpack.config.js 中使用
+        rules: [
+            {
+                test: require.resolve('jquery),
+                use: 'expose-loader?$'
+            }
+        ]
+        ```
+    2. 在**每一个模块中注入$符号**，这样就不需要我们在文件中引入`jquery`, 可以使用`webpack.ProvidePlugin` 插件，但是**不能直接通过window.$来**使用，只能在模块内部使用。
     ```javascript
-    new webpack.ProvidePlugin({
+    // 在每一个模块中注入jquery,可以通过$变量来使用
+    new webpack.ProvidePlugin({ 
       $: 'jquery'
     })
     ```
-    3. 直接`index.html`引入， 但是要配置不打包    
+    3. 通过script直接`index.html`引入， 直接通过script引入的话，就不需要打包
+    ```javascirpt
+    externals: {
+        jquery: "jQuery"
+    }
+    ```
 
 #### 第九节  webpack处理图片
 * 分支： `seven-section`
