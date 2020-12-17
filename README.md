@@ -141,25 +141,25 @@
         let image = new Image()
         image.src = logo
         ```
-    2. css的`background`
+    2. css的`background`：由于`css-loader`默认会把`background: url("./logo.png")` 改成 `background: url(require('./logo.png'))`
+    3. HTML中使用`img` 使用`html-withimg-loader`进行图片的使用
     
-    3. HTML中使用`img`
 * 内容：
-    1. 需要使用`url-loader` 当图片小于一定值的时候转换为base64,其他情况使用`file-loader`为图片
+    1. 需要使用`url-loader` 当图片小于一定值的时候转换为base64,可以通过options下面的outputPath来指定位置，其他情况使用`file-loader`为图片
     2. 在webpack中配置图片的处理
     3. 如果需要再`index.html`中使用图片，可以使用require语句或者使用`html-loader`
     ```javascript
     <img src="${require('./group.png')}" alt="">
     ```
-#### 第九节  文件的归类
+#### 第10节  文件的归类
 * 分支： `seven-section`
 * 需求：需要把打包出来的文件对应的相应的目录
 * 内容：
-     1. css对应最后的处理plugin `MiniCssExtractPlugin`(一般都是filename的那个处理)
-     2. js对应`output`的路径配置
+     1. css对应最后的处理plugin `MiniCssExtractPlugin`(一般都是filename的进行处理 '/css/main.css')
+     2. js对应`output`的路径配置: 通过`publicPath` 来指定全局样式和图片的前缀
      3. 图片对应`url-loader`本质上是调用了`file-loader`的options中的`outputPath`
   
-#### 第九节  cdn的单个使用或者整体使用
+#### 第11节  cdn的单个使用或者整体使用
 * 分支： `seven-section`
 * 需求：需要把打包出来的文件添加对应的cdn域名
 * 内容：
@@ -170,9 +170,9 @@
 * 分支 `eight-section`
 * 需求： 需要多个页面的来展示不同的效果
 * 内容： 
-    1. 需要配置多个`entry`，所以entry为一个对象
+    1. 需要配置多个`entry`，所以entry为一个对象，output的 `filename` 需要不同的名字 `[name].js`
     2. 多个入口文件`index.html`, 产生不同名字的文件
-    3. 由于`HtmlWebpackPlugin`这个插件会把文件产生的资源都插到对应的`template`中，所以我们需要指定对应的文件插入对应的打包资源
+    3. 由于`HtmlWebpackPlugin`这个插件会把文件产生的资源都插到对应的`template`对应的文件中，所以我们需要指定对应的文件插入对应的打包资源
     4. 配置`HtmlWebpackPlugin`的`chunks`, 只打包对应的资源到对应的模板   
      
 #### 第十一节 source-map的使用
