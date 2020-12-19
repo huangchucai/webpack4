@@ -180,12 +180,23 @@
 * 需求：方便我们调试开发代码，需要源码映射
 * 内容：
    1. 在`webpack.config.js`中使用`devtool`
+   2. `devtool: 'source-map'` 产生单独的map文件，用于存放源码映射
+   3. `devtool: 'eval-source-map'` 不会产生单独的文件，把行和列的映射放入打包后的文件中， 一般开发环境使用
 
 #### 第十二节  实时监控watch
 * 分支： `seven-section`
 * 需求：方便我们实时的打包文件
 * 内容：
    1. 在`webpack.config.js`中使用`watch`
+   2. 可以通过watchOptions 配置
+   ```javascript
+   watch: true
+   watchOptions: { // 监控的选项
+       poll: 1000,  // 每秒 问我1000次
+       aggregateTimeout: 500,  // 防抖，我一直输入代码，停止500毫秒后进行打包
+       ignore: /node_modules/  // 不需要监控的文件
+   }
+   ```
 #### 第十二节  实时监控watch
 * 分支： `seven-section`
 * 需求：一些常用的插件
@@ -210,7 +221,7 @@
         }  
       }
     
-      // /api/user  => 转到3000的端口的 /user
+      // 路径转换 /api/user  => 转到3000的端口的 /user
       devServer: {
         proxy: {
           '/api':  {
@@ -233,7 +244,7 @@
             }
       }
     ```
-    3. 不使用代理，在启动服务端的时候启动webpack(2个公用同一个端口，不存在跨域)
+    3. 不使用代理，在启动服务端的时候启动webpack(2个共用同一个端口，不存在跨域)
     ```javascript
       const webpack = require('webpack');
       const middleware = require('webpack-dev-middleware');
