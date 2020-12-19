@@ -262,6 +262,15 @@
     2. 一些别名来减少字段（`alias`）
     3. import第三方模块的时候默认会读取`package.json`下面的main字段，希望优先读取别的字段（`mainFields`）
     4. 默认添加一些后缀查找（`extensions`）
+    ```javascript
+    resolve: {
+        modules: [path.resolve('node_modules')] // 只在当前目录的node_modules中查找
+        alias: { 别名
+            bootstrap: 'bootstrap/dist/css/bootstrap.css'  // 引入bootstrap下面的css文件。 例如 在index.js 中  import 'bootstrap'
+        },
+        mainFields:  ['style', 'main']  // 引入第三方模块的时候，优先找到package.json中的style文件，找不到就再寻找main文件
+    }
+    ```
 
 #### 环境变量和开发、生成配置分开
 * 分支：`ten-section`
